@@ -22,7 +22,7 @@ public class AppController {
         return "Welcome, User!";
     }
 
-    @GetMapping("all-app")
+    @GetMapping("/all-app")
     public List<Application> allApplications() {
         return service.allAplications();
     }

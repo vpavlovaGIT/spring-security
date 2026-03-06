@@ -1,3 +1,5 @@
 spring:
-  application:
-    name: spring-security-example
+  security:
+    user:
+      name: admin
+      password: admin
