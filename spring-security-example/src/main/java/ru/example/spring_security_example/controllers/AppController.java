@@ -1,6 +1,7 @@
 package ru.example.spring_security_example.controllers;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,11 +24,13 @@ public class AppController {
     }
 
     @GetMapping("/all-app")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public List<Application> allApplications() {
         return service.allAplications();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public  Application applicationByID (@PathVariable int id) {
         return service.applicationById(id);
     }
