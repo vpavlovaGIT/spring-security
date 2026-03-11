@@ -2,16 +2,26 @@ package ru.example.spring_security_example.services;
 
 import com.github.javafaker.Faker;
 import jakarta.annotation.PostConstruct;
+import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.example.spring_security_example.models.Application;
+import ru.example.spring_security_example.models.MyUser;
+import ru.example.spring_security_example.repository.UserRepository;
 
 import java.util.List;
 import java.util.stream.IntStream;
 
 @Service
+@AllArgsConstructor
 public class AppService {
 
     private List<Application> applications;
+
+    private UserRepository repository;
+
+    private PasswordEncoder passwordEncoder;
+
     @PostConstruct
     public void loaddAppInDB(){
         Faker faker = new Faker();
@@ -34,4 +44,10 @@ public class AppService {
                 .findFirst()
                 .orElse(null);
     }
+
+    public void addUser(MyUser user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        repository.save(user);
+    }
+
 }
